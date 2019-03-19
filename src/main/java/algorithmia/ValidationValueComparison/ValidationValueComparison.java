@@ -1,7 +1,13 @@
 package algorithmia.ValidationValueComparison;
 
+import com.algorithmia.algo.AcceptsJson;
+import com.algorithmia.algo.ReturnsJson;
+import com.google.gson.JsonElement;
+
 public class ValidationValueComparison {
-    public String apply(String s) throws Exception {
-        return "Hello " + s;
+    @AcceptsJson
+    @ReturnsJson
+    public JsonElement apply(String input) {
+        return new Runner(input).parseAndRunValidationRule();
     }
 }
