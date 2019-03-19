@@ -1,4 +1,4 @@
-package algorithmia.validationvaluecomparison;
+package algorithmia.ValidationValueComparison;
 
 
 import com.algorithmia.Algorithmia;
