@@ -1,4 +1,4 @@
-package algorithmia.validationvaluecomparison;
+package algorithmia.ValidationValueComparison;
 
 
 import org.junit.Test;
