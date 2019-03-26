@@ -3,6 +3,7 @@ package algorithmia.ValidationValueComparison;
 
 import com.algorithmia.Algorithmia;
 import com.algorithmia.AlgorithmiaClient;
+import com.algorithmia.TypeToken;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import org.junit.After;
@@ -12,7 +13,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import static java.lang.Boolean.TRUE;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ValidationValueComparisonSystemIT {
@@ -20,6 +22,7 @@ public class ValidationValueComparisonSystemIT {
     private static String API_KEY = null;
     private static String API_ADDRESS = null;
     private static String ALGORITHM_DESCRIPTOR = null;
+    private static final TypeToken<OutputData> OUTPUT_DATA_TYPE = new TypeToken<OutputData>() {};
 
     private AlgorithmiaClient client = null;
 
@@ -48,7 +51,11 @@ public class ValidationValueComparisonSystemIT {
     }
 
     @Test
-    public void testASuitableGreetingIsReturnedWhenTheAlgorithmInputIsAName() throws Exception {
-        //assertThat(client.algo(ALGORITHM_DESCRIPTOR).pipe("Bob").asString(), equalTo("Hello Bob"));
+    public void validationRuleIsTriggeredWhenInputValuesDiffer() throws Exception {
+        String inputWithDifferingValues = "{\"primaryValue\":\"1.234\", \"secondaryValue\":\"5.678\"}";
+
+        OutputData output = client.algo(ALGORITHM_DESCRIPTOR).pipe(inputWithDifferingValues).as(OUTPUT_DATA_TYPE);
+
+        assertThat(output.triggered, is(TRUE));
     }
 }
